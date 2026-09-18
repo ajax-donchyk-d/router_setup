@@ -75,25 +75,25 @@ def main():
     config.get("save_backup") and router.save_text_config_backup(
         destination_dir="backups"
     )
-    dhcp_leases = router.collect_dhcp_leases()
-    router.set_static_ip_addresses_for_leases(dhcp_leases)
-    for dhcp_client in dhcp_leases:
-        rules_list = router.form_port_forward_rule_client_block(
-            dhcp_client=dhcp_client,
-            start_rule_num=router.get_next_port_forward_rule_number(),
-        )
-        formatted_log_rules = "\n".join(
-            f"  Block #{idx + 1}:\n" + "\n".join(f"    {cmd}" for cmd in block)
-            for idx, block in enumerate(rules_list)
-        )
-
-        router.logger.info(
-            "Formed rules for '%s':\n%s\nApplying rules to router...",
-            dhcp_client.client_name,
-            formatted_log_rules,
-        )
-
-        router.set_forward_port_rules(rules_list)
+    # dhcp_leases = router.collect_dhcp_leases()
+    # router.set_static_ip_addresses_for_leases(dhcp_leases)
+    # for dhcp_client in dhcp_leases:
+    #     rules_list = router.form_port_forward_rule_client_block(
+    #         dhcp_client=dhcp_client,
+    #         start_rule_num=router.get_next_port_forward_rule_number(),
+    #     )
+    #     formatted_log_rules = "\n".join(
+    #         f"  Block #{idx + 1}:\n" + "\n".join(f"    {cmd}" for cmd in block)
+    #         for idx, block in enumerate(rules_list)
+    #     )
+    #
+    #     router.logger.info(
+    #         "Formed rules for '%s':\n%s\nApplying rules to router...",
+    #         dhcp_client.client_name,
+    #         formatted_log_rules,
+    #     )
+    #
+    #     router.set_forward_port_rules(rules_list)
 
 
 if __name__ == "__main__":
